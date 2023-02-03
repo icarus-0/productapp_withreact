@@ -5,5 +5,6 @@ const Request = {
   offer: `${BASE_URL}api/v1/offer`,
   product: `${BASE_URL}api/v1/product`,
   productDetails: `${BASE_URL}api/v1/productdetails`,
+  productcatandoffers: `${BASE_URL}api/v1/productcatandoffers`,
 };
 export default Request;

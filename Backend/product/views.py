@@ -40,7 +40,7 @@ class Accounts(APIView):
                             user.save()
                             res = {
                                 "status": 200,
-                                "message": "Doctor Registration successfully completed",
+                                "message": "User registered successfully completed",
                             }
                             return JsonResponse(res)
                         except Exception as e:
@@ -78,16 +78,6 @@ class Accounts(APIView):
             res = {"status": 403, "error": "Invalid type parameter given"}
             return JsonResponse(res)
 
-    def delete(self, request):
-        try:
-            userid = request.POST["id"]
-            user = User.objects.filter(id=userid).get()
-            user.delete()
-            res = {"status": 200, "message": "Doctor account removed"}
-        except Exception as e:
-            res = {"status": 500, "error": str(e)}
-
-        return JsonResponse(res)
 
 
 class CategoryView(APIView):
@@ -167,3 +157,16 @@ class ProductDetails(APIView):
         product = Product.objects.get(slug=slug)
         serializer = ProductSerializer(product)
         return Response(serializer.data)
+    
+class ProductCategoryAndOffers(APIView):
+    def post(self, request):
+        slug = request.data['slug']
+        product = Product.objects.get(slug=slug)
+        offers = Offer.objects.filter(products=product)
+        serializer = OfferSerializer(offers,many=True)
+        res = {
+            'category' : product.Category.title,
+            'offers' : serializer.data
+        }
+        return Response(res)
+        

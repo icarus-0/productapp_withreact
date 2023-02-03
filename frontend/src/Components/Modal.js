@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   AddCategory,
   AddOffer,
@@ -16,6 +17,9 @@ function Modal(props) {
   const [categories, setCategories] = useState([]);
   const [offers, setOffers] = useState([]);
   const [selectedOffers, setSelectedOffers] = useState([]);
+  const navigate = useNavigate();
+
+  const closemodal = useRef();
 
   useEffect(() => {
     if (props.type === "product") {
@@ -74,6 +78,7 @@ function Modal(props) {
                   type="button"
                   class="btn btn-secondary"
                   data-bs-dismiss="modal"
+                  ref={closemodal}
                 >
                   Close
                 </button>
@@ -81,7 +86,7 @@ function Modal(props) {
                   type="button"
                   class="btn btn-primary"
                   onClick={() => {
-                    AddCategory(title);
+                    AddCategory(title, navigate, closemodal);
                   }}
                 >
                   Add
@@ -141,6 +146,7 @@ function Modal(props) {
                   type="button"
                   class="btn btn-secondary"
                   data-bs-dismiss="modal"
+                  ref={closemodal}
                 >
                   Close
                 </button>
@@ -148,7 +154,7 @@ function Modal(props) {
                   type="button"
                   class="btn btn-primary"
                   onClick={() => {
-                    AddOffer(title, price);
+                    AddOffer(title, price, navigate, closemodal);
                   }}
                 >
                   Add
@@ -254,6 +260,7 @@ function Modal(props) {
                   type="button"
                   class="btn btn-secondary"
                   data-bs-dismiss="modal"
+                  ref={closemodal}
                 >
                   Close
                 </button>
@@ -267,7 +274,9 @@ function Modal(props) {
                       description,
                       image,
                       category,
-                      selectedOffers
+                      selectedOffers,
+                      navigate,
+                      closemodal
                     );
                   }}
                 >

@@ -7,10 +7,12 @@ import { getProductDetails } from "../Services/Productservice";
 function Product() {
   const { slug } = useParams();
   const [product, setProduct] = useState([]);
+  const [category, setCategory] = useState();
+  const [offers, setOffers] = useState([]);
 
   useEffect(() => {
-    getProductDetails(setProduct, slug);
-  }, [setProduct, slug]);
+    getProductDetails(setProduct, setCategory, setOffers, slug);
+  }, [setProduct, setCategory, setOffers, slug]);
 
   return (
     <div>
@@ -21,9 +23,15 @@ function Product() {
           <div class="card-body">
             <h5 class="card-title">{product.title}</h5>
             <p class="card-text">{product.desc}</p>
+            <p class="card-text">Category -{category}</p>
             <p class="card-text">
               <small class="text-muted">Price - {product.price} Rs.</small>
             </p>
+            {offers.map((offer) => {
+              return (
+                <span class="badge text-bg-primary m-2">{offer.title}</span>
+              );
+            })}
           </div>
         </div>
       </div>
