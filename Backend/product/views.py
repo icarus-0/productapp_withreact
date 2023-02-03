@@ -126,7 +126,8 @@ class ProductView(APIView):
         image = request.data['image']
 
         category = Category.objects.get(pk=category)
-        if len(offers) != 0:
+        print(offers)
+        if len(offers) != 0 and offers[0] != '':
             offers = Offer.objects.filter(pk__in=offers)
 
         ins = Product(
@@ -139,10 +140,10 @@ class ProductView(APIView):
         ins.save()
 
         ls_offers = []
-
-        for off in offers:
-            off.products.add(ins)
-            off.save()
+        if len(offers) != 0 and offers[0] != '':
+            for off in offers:
+                off.products.add(ins)
+                off.save()
 
         res = {
             'message': 'product added'
