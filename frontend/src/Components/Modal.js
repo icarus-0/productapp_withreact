@@ -234,7 +234,7 @@ function Modal(props) {
                     onChange={(e) => {
                       setCategory(e.target.value);
                     }}
-                  >
+                  ><option value={1}>Choose a category ..</option>
                     {categories.map((cat) => {
                       return <option value={cat.id}>{cat.title}</option>;
                     })}
